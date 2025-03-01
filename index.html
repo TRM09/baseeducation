@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База знаний</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #800080; /* Фиолетовый цвет */
+            margin-top: 0;
+        }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #800080; /* Фиолетовый цвет */
+            text-decoration: none;
+        }
+        .back-arrow:hover {
+            text-decoration: underline;
+        }
+        .search-box {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .file-list {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .file-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        .file-item a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .file-item a:hover {
+            text-decoration: underline;
+        }
+        /* Стили для кнопки "Скачать" */
+        .download-button {
+            background-color: #5A9BD5; /* Цвет фона */
+            color: white; /* Белый текст */
+            font-weight: bold; /* Жирный текст */
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .download-button:hover {
+            background-color: #4a8ac4; /* Темнее при наведении */
+        }
+    </style>
+</head>
+<body>
+    <!-- Стрелка влево с переходом на указанную страницу -->
+    <a href="https://myappreshenie.netlify.app/" class="back-arrow">&#8592;</a>
+
+    <h1>База знаний</h1>
+
+    <!-- Строка поиска -->
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Поиск файлов...">
+    </div>
+
+    <!-- Список файлов -->
+    <div class="file-list" id="file-list">
+        <!-- Файлы будут добавлены сюда -->
+    </div>
+
+    <script>
+        // Массив файлов
+        const files = [
+            {
+                name: "Положение ИТЦ.docx",
+                downloadLink: "#" // Замените на реальную ссылку для скачивания
+            },
+            {
+                name: "Инструкция лаборант.docx",
+                downloadLink: "#" // Замените на реальную ссылку для скачивания
+            }
+        ];
+
+        // Функция для отображения файлов
+        function displayFiles(filter = '') {
+            const fileList = document.getElementById('file-list');
+            fileList.innerHTML = ''; // Очистка списка перед обновлением
+
+            files
+                .filter(file => file.name.toLowerCase().includes(filter.toLowerCase())) // Фильтрация файлов
+                .forEach(file => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+
+                    const fileName = document.createElement('span');
+                    fileName.textContent = file.name;
+
+                    const downloadButton = document.createElement('a');
+                    downloadButton.href = file.downloadLink;
+                    downloadButton.textContent = 'Скачать';
+                    downloadButton.download = file.name;
+                    downloadButton.className = 'download-button'; // Добавляем класс для стилизации
+
+                    fileItem.appendChild(fileName);
+                    fileItem.appendChild(downloadButton);
+
+                    fileList.appendChild(fileItem);
+                });
+        }
+
+        // Поиск файлов
+        document.getElementById('search').addEventListener('input', (e) => {
+            displayFiles(e.target.value);
+        });
+
+        // Отображение файлов при загрузке страницы
+        displayFiles();
+    </script>
+</body>
+</html>
